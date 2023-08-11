@@ -7,7 +7,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-var conn *sqliteConnection
+var s *sqliteConnection
 
 type sqliteConnection struct {
 	dbfile string
@@ -57,10 +57,10 @@ func GetConnection(dbfile string) (*sqliteConnection, error) {
 	if dbfile == "" {
 		return nil, errors.New("dbfile can't be an empty string!")
 	}
-	if conn != nil && conn.dbfile != dbfile {
-		conn.dbfile = dbfile
-		return conn.connect()
+	if s != nil && s.dbfile != dbfile {
+		s.dbfile = dbfile
+		return s.connect()
 	}
-	conn = &sqliteConnection{dbfile: dbfile}
-	return conn.connect()
+	s = &sqliteConnection{dbfile: dbfile}
+	return s.connect()
 }
